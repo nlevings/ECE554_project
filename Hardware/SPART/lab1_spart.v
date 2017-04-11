@@ -42,7 +42,7 @@ module lab1_spart(
     input        [3:0]  KEY,
 
  //////////// LED //////////
-    output		   [9:0]		LEDR,
+    output reg	   [9:0]		LEDR,
 
  //////////// SW //////////
     input        [9:0]  SW,
@@ -51,9 +51,15 @@ module lab1_spart(
     inout       [35:0]  GPIO
 );
 
+
+
 wire txd; //transmit data (to serial)
 wire rxd; //receive data (to serial)
-wire br_cfg;
+
+wire [15:0]	spart_w_data;
+wire 		spart_w_req;
+wire [24:0]	spart_start_addr;
+wire [24:0]	spart_end_addr;
 
 // press button[0] to generate a low active reset signal
 wire rst = KEY[0];
@@ -65,12 +71,37 @@ assign rxd = GPIO[5];
 // Instantiate your spart here
 spart spart0(   .spart_ref_clk(CLOCK_50),
                 .rst(rst),
+				.send_start_end(1'b1),
                 .txd(txd),
                 .rxd(rxd),
-				.spart_w_data(),
-				.spart_w_req(),
-				.spart_start_addr(),
-				.spart_end_addr()
+				.spart_w_data(spart_w_data),
+				.spart_w_req(spart_w_req),
+				.spart_start_addr(spart_start_addr),
+				.spart_end_addr(spart_end_addr)
             );
+	
+
+
+// To test if spart_w_req is valid when spart_w_req is asserted
+always@(*) begin
+	if(spart_w_req) begin
+		LEDR [7:0] = spart_w_data[7:0];
+	end else begin
+		LEDR [7:0] = LEDR [7:0];
+	end
+	
+end
+
+// To test if start_addr and end_addr work
+always@(*) begin
+	if(spart_start_addr == 25'h0123456)
+		LEDR[9] = 1;
+	else
+		LEDR[9] = 0;
+	if(spart_end_addr == 25'h1ABCDEF)
+		LEDR[8] = 1;
+	else
+		LEDR[8] = 0;
+end
 		
 endmodule
