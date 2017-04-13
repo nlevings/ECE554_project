@@ -26,7 +26,8 @@ module spart(
 	output [15:0]	spart_w_data,
 	output 			spart_w_req,
 	output reg [24:0]	spart_start_addr,
-	output reg [24:0]	spart_end_addr
+	output reg [24:0]	spart_end_addr,
+	output			spart_address_valid		// Asserts when start and end addresses are valid
     );
 	
 parameter start_addr = 25'h0;
@@ -50,6 +51,8 @@ reg [3:0] ascii_to_hex;	// Converts a hexadecimal character's ascii value to the
 
 assign spart_w_req = data_valid & (byte_counter >= 4'hE | ~send_start_end);
 assign spart_w_data = (send_start_end & byte_counter < 4'hE) ? 16'bZ : (spart_w_req) ? {8'b0, databus} : 16'bZ;
+
+assign spart_address_valid = (~send_start_end) ? 1'b1 : (byte_counter >= 4'hE) ? 1'b1 : 1'b0;
 
 assign databus = iorw ? rx_data_w : 8'bz; //tri-state databus
      

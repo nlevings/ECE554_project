@@ -64,6 +64,8 @@ wire [24:0]	spart_end_addr;
 // press button[0] to generate a low active reset signal
 wire rst = KEY[0];
 
+wire spart_address_valid;
+
 // GPIO[3] as TX output, GPIO[5] as RX input
 assign GPIO[3] = txd;
 assign rxd = GPIO[5];
@@ -77,7 +79,8 @@ spart spart0(   .spart_ref_clk(CLOCK_50),
 				.spart_w_data(spart_w_data),
 				.spart_w_req(spart_w_req),
 				.spart_start_addr(spart_start_addr),
-				.spart_end_addr(spart_end_addr)
+				.spart_end_addr(spart_end_addr),
+				.spart_address_valid(spart_address_valid)
             );
 	
 
