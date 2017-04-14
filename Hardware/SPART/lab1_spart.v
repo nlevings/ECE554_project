@@ -73,7 +73,6 @@ assign rxd = GPIO[5];
 // Instantiate your spart here
 spart spart0(   .spart_ref_clk(CLOCK_50),
                 .rst(rst),
-				.send_start_end(1'b1),
                 .txd(txd),
                 .rxd(rxd),
 				.spart_w_data(spart_w_data),

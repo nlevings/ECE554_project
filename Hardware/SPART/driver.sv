@@ -37,8 +37,12 @@ reg [15:0]  div_reg_load_val;
 typedef enum reg[2:0]{IDLE, BAUD_LOW, BAUD_HIGH, TX, RX_POLL, RX_REC, TRANS} state_t;
   state_t state, nxt_state;
 
-assign div_reg_load_val = 15'h01A;					// 115200 baud
-//assign div_reg_load_val = 15'h145;				// 9600 baud
+//assign div_reg_load_val = 15'h028A;				// 4800 baud
+//assign div_reg_load_val = 15'h0145;				// 9600 baud
+//assign div_reg_load_val = 15'h00A2;				// 19200 baud
+//assign div_reg_load_val = 15'h0050;				// 38400 baud
+assign div_reg_load_val = 15'h001A;					// 115200 baud
+
   
 //databus value based on switch inputs
 always_comb begin
