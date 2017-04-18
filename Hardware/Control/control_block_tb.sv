@@ -52,14 +52,17 @@ module control_block_tb();
 	// control
 	reg [4:0] A0, A1, M, LS;
 	wire [13:0] control;	// A0_imm_sel[13] A0_op[12:9] A1_imm_sel[8] A1_op[7:4] M_imm_sel[3] M[2] L[1] S[0]
+	wire err;
+	reg exp_err;
 	
 	assign A0_imm_sel = control[13];
 	assign A0_op = control[12:9];
 	assign A1_imm_sel = control[8];
-	assign A1_op
+	assign A1_op = control[7:4];
+	assign M_imm_sel = control[3];
 	
 	
-	control_block(A0, A1, M, LS, control, err);
+	control_block cb(A0, A1, M, LS, control, err);
 	
 	Execute DUT(
 		// Inputs
@@ -73,24 +76,137 @@ module control_block_tb();
 	// A0 Tests
 	initial begin
 		A0_done = 0;
+		exp_err = 0;
 		
 		A0_test = "A0_ADD0";
 		A0_R0 = {16'h1234, 5'b00000};
 		A0_R1 = {16'h5678, 5'b00001};
 		A0_imm = 5'h00;
-		A0_imm_sel = 0;
-		A0_op = ALU_ADD;
-		A0_expected = {16'h68AC, A0_R1[4:0] & ~{5{A0_imm_sel}}, A0_R0[4:0]};
+		A0 = 5'b00000;
+		A0_expected = {16'h68AC, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_ADDI0";
+		A0_R0 = {16'h1234, 5'b00000};
+		A0_R1 = {16'h5678, 5'b00001};
+		A0_imm = 5'h03;
+		A0 = 5'b00001;
+		A0_expected = {16'h1237, 5'b0, A0_R0[4:0]};
 		@(posedge clk);
 		
 		A0_test = "A0_SUB0";
 		A0_R0 = {16'h1234, 5'b00000};
+		A0_R1 = {16'h0004, 5'b00001};
+		A0_imm = 5'h03;
+		A0 = 5'b00011;
+		A0_expected = {16'h1230, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_SUBI0";
+		A0_R0 = {16'h1234, 5'b00000};
 		A0_R1 = {16'h5678, 5'b00001};
 		A0_imm = 5'h04;
-		A0_imm_sel = 1;
-		A0_op = ALU_SUB;
-		A0_expected = {16'h1230, A0_R1[4:0] & ~{5{A0_imm_sel}}, A0_R0[4:0]};
+		A0 = 5'b00100;
+		A0_expected = {16'h1230, 5'b0, A0_R0[4:0]};
 		@(posedge clk);
+		
+		A0_test = "A0_AND0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b00101;
+		A0_expected = {16'h0100, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_OR0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b00110;
+		A0_expected = {16'h0101, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_XOR0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b00111;
+		A0_expected = {16'h0001, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+
+		A0_test = "A0_NOT0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b01000;
+		A0_expected = {16'hFEFF, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_CLR0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b01011;
+		A0_expected = {16'h0000, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_CMPE0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10010;
+		A0_expected = {16'h0, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_CMPG0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10011;
+		A0_expected = {16'h0000, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_CMPL0";
+		A0_R0 = {16'h0100, 5'b00000};
+		A0_R1 = {16'h0101, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10100;
+		A0_expected = {16'h0001, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_SHRA0";
+		A0_R0 = {16'h8000, 5'b00000};
+		A0_R1 = {16'h0001, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10101;
+		A0_expected = {16'hC000, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_SHRL0";
+		A0_R0 = {16'h8000, 5'b00000};
+		A0_R1 = {16'h0001, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10110;
+		A0_expected = {16'h4000, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+
+		A0_test = "A0_SHL0";
+		A0_R0 = {16'h8000, 5'b00000};
+		A0_R1 = {16'h0001, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b10111;
+		A0_expected = {16'h0000, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
+		A0_test = "A0_MUL0 (Error case, expected to fail)";
+		exp_err = 1'b1;
+		A0_R0 = {16'h8000, 5'b00000};
+		A0_R1 = {16'h0001, 5'b00001};
+		A0_imm = 5'h04;
+		A0 = 5'b01101;
+		A0_expected = {16'hXXXX, A0_R1[4:0], A0_R0[4:0]};
+		@(posedge clk);
+		
 
 		A0_done = 1;
 	end
@@ -104,18 +220,20 @@ module control_block_tb();
 		A1_R0 = {16'h1234, 5'b00000};
 		A1_R1 = {16'h5678, 5'b00001};
 		A1_imm = 5'h00;
-		A1_imm_sel = 0;
-		A1_op = ALU_ADD;
-		A1_expected = {16'h68AC, A1_R1[4:0] & ~{5{A1_imm_sel}}, A1_R0[4:0]};
+		//A1_imm_sel = 0;
+		//A1_op = ALU_ADD;
+		A1 = 5'b00000;
+		A1_expected = {16'h68AC, A1_R1[4:0], A1_R0[4:0]};
 		@(posedge clk);
 		
 		A1_test = "A1_ADD1";
 		A1_R0 = {16'h1234, 5'b00000};
 		A1_R1 = {16'h5678, 5'b00001};
 		A1_imm = 5'h15;
-		A1_imm_sel = 1;
-		A1_op = ALU_ADD;
-		A1_expected = {16'h1249, A1_R1[4:0] & ~{5{A1_imm_sel}}, A1_R0[4:0]};
+		//A1_imm_sel = 1;
+		//A1_op = ALU_ADD;
+		A1 = 5'b00001;
+		A1_expected = {16'h1249, 5'b0, A1_R0[4:0]};
 		@(posedge clk);
 		
 		A1_done = 1;
@@ -129,32 +247,36 @@ module control_block_tb();
 		M_R0 = {16'h0004, 5'b00000};
 		M_R1 = {16'h0002, 5'b00001};
 		M_imm = 5'h00;
-		M_imm_sel = 0;
-		M_expected = {16'h0008, M_R1[4:0] & ~{5{M_imm_sel}}, M_R0[4:0]};
+		//M_imm_sel = 0;
+		M = 5'b01101;
+		M_expected = {16'h0008, M_R1[4:0], M_R0[4:0]};
 		@(posedge clk);
 		
 		M_test = "M_1";
 		M_R0 = {16'h0FFF, 5'b00000};
 		M_R1 = {16'hF002, 5'b00001};
 		M_imm = 5'h00;
-		M_imm_sel = 0;
-		M_expected = {16'hFFFF, M_R1[4:0] & ~{5{M_imm_sel}}, M_R0[4:0]};
+		//M_imm_sel = 0;
+		M = 5'b01101;
+		M_expected = {16'hFFFF, M_R1[4:0], M_R0[4:0]};
 		@(posedge clk);
 		
 		M_test = "M_2";
 		M_R0 = {16'h00EA, 5'b00000};
 		M_R1 = {16'h000B, 5'b00001};
 		M_imm = 5'h00;
-		M_imm_sel = 0;
-		M_expected = {16'h0A0E, M_R1[4:0] & ~{5{M_imm_sel}}, M_R0[4:0]};
+		//M_imm_sel = 0;
+		M = 5'b01101;
+		M_expected = {16'h0A0E, M_R1[4:0], M_R0[4:0]};
 		@(posedge clk);
 		
 		M_test = "M_3";
 		M_R0 = {16'h00EA, 5'b00000};
 		M_R1 = {16'h000B, 5'b00001};
 		M_imm = 5'h1F;
-		M_imm_sel = 1;
-		M_expected = {16'h1C56, M_R1[4:0] & ~{5{M_imm_sel}}, M_R0[4:0]};
+		//M_imm_sel = 1;
+		M = 5'b01110;
+		M_expected = {16'h1C56, 5'b0, M_R0[4:0]};
 		@(posedge clk);
 		
 		M_done = 1;
@@ -202,6 +324,17 @@ module control_block_tb();
 			$display("%s Passed", A0_test);
 		else
 			$display("***%s Failed. Expected %h, got %h.***", LS_test, LS_expected_data, LS_data);
+			
+		if(err)
+			if(exp_err)
+				$display("Expected Error Found");
+			else
+				$display("***Unexpected Error Found***");
+		else
+			if(exp_err)
+				$display("***Error expected, none found***");
+			else
+				;
 	end
 			
 	always@(posedge clk)

@@ -17,7 +17,7 @@ module control_block(A0, A1, M, LS, control, err);
 	assign control[1] = LS == 5'b10001;					// Load Enable
 	assign control [0] = LS == 5'b10000;				// Store Enable
 
-	assign M_err = ~(M == 5'b01101 | M == 5'b01101 | M == 5'b01100);
+	assign M_err = ~(M == 5'b01101 | M == 5'b01110 | M == 5'b01100);
 	assign err = A0_err | A1_err | M_err;
 
 endmodule
