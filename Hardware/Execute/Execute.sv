@@ -89,7 +89,7 @@ module Execute(
 	// LS
 	assign LS_data = LS_R2[7:0];
 	assign LS_addr = {LS_R1[8:0], LS_R0};
-	assign LS_R_nw = ~write;
+	assign LS_R_nW = ~write;
 	assign LS_Rd_tag_out = LS_Rd_tag_in;
 	
 endmodule
