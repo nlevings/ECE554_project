@@ -1,4 +1,4 @@
-module demm_ctrl(
+module dmem_ctrl(
 input rst_n,
 input ref_clk,
 input busy
