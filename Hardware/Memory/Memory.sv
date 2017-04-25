@@ -6,7 +6,6 @@ module Memory(ref_clk, rst_n, A0_in, A0_Rd_tag_in, A1_in, A1_Rd_tag_in, M_in, M_
 	input ref_clk;
 	input rst_n;
 	
-	
 	// Pass through
 	input [15:0] A0_in;			// Result from ALU0
 	input [4:0] A0_Rd_tag_in;
@@ -47,6 +46,8 @@ module Memory(ref_clk, rst_n, A0_in, A0_Rd_tag_in, A1_in, A1_Rd_tag_in, M_in, M_
 	
 	// wires
 	wire sd_busy;				// SDRAM_ctrl -> dmem_ctrl
+	wire granted;				// SDRAM_ctrl -> dmem_ctrl
+	wire [15:0] row_length;		// SDRAM_ctrl -> dmem_ctrl
 	wire request;				// dmem_ctrl -> SDRAM_ctrl
 	wire [24:0] start_addr;		// dmem_ctrl -> SDRAM_ctrl
 	wire [24:0] length;			// dmem_ctrl -> SDRAM_ctrl
@@ -62,8 +63,12 @@ module Memory(ref_clk, rst_n, A0_in, A0_Rd_tag_in, A1_in, A1_Rd_tag_in, M_in, M_
 	wire [15:0] sd_addr;		// SDRAM_ctrl -> mux -> DM
 	wire sd_R_nW;				// SDRAM_ctrl -> mux -> DM
 	
-	dmem_ctrl(.rst_n(rst_n), .ref_clk(ref_clk), .busy(sd_busy), .sdram_addr(LS_addr), .request(request),
-			.start_addr(start_addr), .length(length), .dmc_addr(dmc_addr), .stall(stall), .d_sb(d_sb));
+	wire [9:0] matrix_addr;		// SDRAM_ctrl -> matrix memory
+	wire matrix_wr_en;
+	
+	dmem_ctrl(.rst_n(rst_n), .ref_clk(ref_clk), .granted(granted), .busy(sd_busy), .sdram_addr(LS_addr), row_length(row_length), 
+			.request(request), .start_addr(start_addr), .length(length), .matrix_addr(matrix_addr), .matrix_wr_en(matrix_wr_en),
+			.dmc_addr(dmc_addr), .stall(stall), .d_sb(d_sb));
 			
 	dmem(.data(dm_data), .addr(dm_addr), .R_nW(dm_R_nW), .wb_data(wb_data));
 	
