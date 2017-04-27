@@ -94,19 +94,19 @@ module alu_ops(op_in, op_out, imm_sel, err);
 		5'b10101: begin
 			// SHRA
 			op_out = 4'b1010;
-			imm_sel = 1'b0;
+			imm_sel = 1'b1;
 			err = 1'b0;
 		end
 		5'b10110: begin
 			// SHRL
 			op_out = 4'b1011;
-			imm_sel = 1'b0;
+			imm_sel = 1'b1;
 			err = 1'b0;
 		end
 		5'b10111: begin
 			// SHL
 			op_out = 4'b1100;
-			imm_sel = 1'b0;
+			imm_sel = 1'b1;
 			err = 1'b0;
 		end
 		default: begin
