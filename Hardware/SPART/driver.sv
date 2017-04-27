@@ -26,11 +26,14 @@ module driver(
     input            tbr,
     output reg [1:0] ioaddr,
     inout [7:0]      databus,
-	output reg		 data_valid
-    );
+	output reg		 data_valid,
+	output reg [7:0] read_data,  // data from an RX transaction
+    input            send_start,
+	output reg       sent_start_flag
+	);
 
 reg [7:0]   write_data; // data to write on databus (baud rate config/RX data)
-reg [7:0]   read_data;  // data from an RX transaction
+
 reg [15:0]  div_reg_load_val;
 
 
@@ -41,8 +44,8 @@ typedef enum reg[2:0]{IDLE, BAUD_LOW, BAUD_HIGH, TX, RX_POLL, RX_REC, TRANS} sta
 //assign div_reg_load_val = 15'h0145;				// 9600 baud
 //assign div_reg_load_val = 15'h00A2;				// 19200 baud
 //assign div_reg_load_val = 15'h0050;				// 38400 baud
-assign div_reg_load_val = 15'h001A;					// 115200 baud
-
+//assign div_reg_load_val = 15'h0035;				// 57600 baud
+assign div_reg_load_val = 15'h001A;				// 115200 baud
   
 //databus value based on switch inputs
 always_comb begin
@@ -51,7 +54,8 @@ always_comb begin
 	else if(ioaddr == 2'b11 && ~iorw)
 	    write_data = div_reg_load_val[15:8];
 	else
-		write_data = read_data;
+		//write_data = read_data;
+		write_data = 8'h45; // response to indicate RX of row and col
  end
 
  //set the databus on valid recieved data 
@@ -70,6 +74,16 @@ always_ff@(posedge clk, negedge rst)begin
       state <= nxt_state;
 end
 
+reg sent_start; //from state machine
+
+always@(*)
+    if (!rst)
+	    sent_start_flag = 1'b0;
+	else if (sent_start)	
+        sent_start_flag = 1'b1;
+	else
+        sent_start_flag = sent_start_flag;	
+		
 // iorw: 1 = r; 0 = w;
 assign databus = iorw ? 8'bz : write_data;
 
@@ -79,6 +93,7 @@ always_comb begin
 	iorw      = 1'b0;
 	iocs      = 1'b0;	
 	data_valid = 1'b0;
+	sent_start = 1'b0;
 	nxt_state = IDLE;
 
 	case(state)
@@ -106,7 +121,15 @@ always_comb begin
             nxt_state   = RX_POLL;
 		end
 
-		RX_POLL : if(~rda) begin
+		RX_POLL : 
+		if (!sent_start_flag && send_start) begin
+		    ioaddr      = 2'b00;
+		    iorw        = 1'b0;
+			iocs        = 1'b1;	
+			nxt_state   = TX;			    	
+		end
+		else 
+		if(~rda) begin
 			ioaddr		= 2'b00;
 			iorw 		= 1'b1;
 			iocs		= 1'b0;			
@@ -115,8 +138,8 @@ always_comb begin
 		else begin
 			ioaddr		= 2'b00;
 			iorw 		= 1'b1;
-			iocs		= 1'b1;			
-			nxt_state	= RX_POLL;
+			iocs		= 1'b1;
+            nxt_state   = RX_POLL;				
 		end
 			
 		RX_REC : if(rda) begin
@@ -136,16 +159,18 @@ always_comb begin
 		TRANS:
 		begin
 		    ioaddr      = 2'b00;
-		    iorw        = 1'b0;
+		    iorw        = 1'b1;
 			iocs        = 1'b1;			
             data_valid 	= 1'b1;
-			nxt_state   = TX;
+			nxt_state	= RX_POLL;
+			//nxt_state	= TX;
 		end
 
 		TX : if(tbr) begin
 			ioaddr		= 2'b00;
 			iorw 		= 1'b1;
 			iocs		= 1'b1;
+			sent_start  = 1'b1;
 			nxt_state	= RX_POLL;
 		end
 

@@ -28,9 +28,20 @@ output       rda;
 reg    [9:0] rx_shift_reg;
 reg    [3:0] shift_count;
 reg          got_start;
+reg rx_d1, rx_d2;
 
 parameter [3:0] load_val = 4'hA;
 
+// sync to this clk domain
+always@(posedge clk or negedge rst)
+	if (!rst) begin
+		rx_d1 <= 1'b0;
+		rx_d2 <= 1'b0;
+	end else begin
+		rx_d1 <= rxd;
+		rx_d2 <= rx_d1;
+	end
+	
 always@(posedge clk or negedge rst) begin
 
 	if(!rst) begin
@@ -39,8 +50,8 @@ always@(posedge clk or negedge rst) begin
 		got_start    <= 1'b0;
 	end	
 	// get start condition	
-	else if(!rxd && iorw && (shift_count == load_val)) begin
-		rx_shift_reg[9] <= rxd;
+	else if(!rx_d2 && iorw && (shift_count == load_val)) begin
+		rx_shift_reg[9] <= rx_d2;
 		shift_count     <= 4'h0;
 		got_start       <= 1'b1;
 	end
@@ -52,7 +63,7 @@ always@(posedge clk or negedge rst) begin
 	end
 	// shift data in
 	else if(enb && iorw && got_start) begin
-	    rx_shift_reg <= {rxd, rx_shift_reg[8:1]};				
+	    rx_shift_reg <= {rx_d2, rx_shift_reg[8:1]};				
 		shift_count <= shift_count + 1'b1;
 		got_start <= got_start;
 	end

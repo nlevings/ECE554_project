@@ -49,11 +49,11 @@ txd = 1'b1;
 
 repeat (20) @ (posedge clk);
 @ (negedge clk) key = 4'b1111; // reset de-assert
+repeat (20) @ (posedge clk);
 
-
-repeat(10) begin
+repeat(4) begin
 // sending 0x31
-repeat (5) @ (posedge clk);
+repeat (20) @ (posedge clk);
 txd = 1'b0;		// start bit
 repeat (pause) @ (posedge clk);
 txd = 1'b1;		// bit 0
