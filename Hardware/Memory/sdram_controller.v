@@ -2,37 +2,39 @@
 module sdram_controller(
     input            rst_n,
     input            ref_clk,
+    /// DEBUG SIGNALS ///
     output [2:0]     curr_state,
     output [15:0]    smth,
+    output [15:0]     sdram_rd_data, // from sub-controller
+    output reg [15:0] sdram_wr_data,
+    /// DEBUG SIGNALS ///
 
     //// spart section
     input            spart_trxn_req,
-    output           spart_trxn_grant,
-    output           spart_trxn_busy,
+    output reg       spart_trxn_grant,
+    output reg       spart_trxn_busy,
 
     output           spart_ref_clk,
     input [15:0]     spart_wr_data,
     input            spart_wr_req,
     input [24:0]     spart_start_addr,
-    input [24:0]     spart_end_addr,
-    input            spart_load_addr,
+    input [24:0]     spart_trxn_length,
 
     //// VGA section
-    input            vga_request,
-    output           vga_grant,
-    output           vga_busy,
+    input            vga_trxn_req,
+    output reg       vga_trxn_grant,
+    output reg       vga_trxn_busy,
 
     input            vga_ref_clk,
     input [15:0]     vga_w_data,
     input            vga_w_req,
     input [24:0]     vga_start_addr,
-    input [24:0]     vga_end_addr,
-    input            vga_load_addr,
+    input [24:0]     vga_trxn_length,
 
     // DATA MEM secti
-    input            dmem_request,
-    output           dmem_grant,
-    output           dmem_busy,
+    input            dmem_trxn_req,
+    output reg       dmem_trxn_grant,
+    output reg       dmem_trxn_busy,
 
     output           dmem_ref_clk,
     output [`DMEM_A_LEN-1:0] dmem_addr_out,
@@ -40,11 +42,10 @@ module sdram_controller(
     input      [7:0] dmem_rd_data,
     output           dmem_rden_out,
     output           dmem_wren_out,
+    input [24:0]     dmem_start_addr,
+    input [24:0]     dmem_trxn_length,
 
     // SDRAM section
-    output [15:0]     sdram_rd_data, // from sub-controller
-    output reg [15:0] sdram_wr_data,
-
     output [12:0]     sa,         //SDRAM address output
     output [1:0]      ba,         //SDRAM bank address
     output            cs_n,       //SDRAM Chip Selects
@@ -56,6 +57,7 @@ module sdram_controller(
     output [1:0]      dqm,        //SDRAM data mask lines
     output	      sdr_clk	  //SDRAM clock
 );
+
 
 // pll for on-chip RAM
 wire clk_050_pll;
@@ -83,10 +85,92 @@ assign dmem_ref_clk = clk_050_pll;
 
 assign spart_ref_clk = clk_050_pll;
 
-//parameter [7:0]
-//   IDLE_ARB
-assign spart_trxn_grant = 1'b1;
+// transaction types
+parameter[2:0] 
+    IDLE_CTRL   = 3'b000, 
+    SPART_SDRAM = 3'b001, 
+    SDRAM_DMEM  = 3'b010,
+    DMEM_SDRAM  = 3'b011,
+    SDRAM_VGA   = 3'b100;
 
+reg [2:0] ctrl_state, ctrl_next_state;
+always@(posedge spart_ref_clk or negedge rst_n)
+    if (!rst_n) ctrl_state <= IDLE_CTRL;
+    else        ctrl_state <= ctrl_next_state;
+// states
+always@(*) begin
+    ctrl_next_state = IDLE_CTRL;
+    
+    spart_trxn_grant = 1'b0;
+    spart_trxn_busy  = 1'b0;
+
+    vga_trxn_grant   = 1'b0;
+    vga_trxn_busy    = 1'b0;
+    
+    dmem_trxn_grant  = 1'b0;
+    dmem_trxn_busy   = 1'b0;
+    
+    case(ctrl_state)
+        IDLE_CTRL: begin
+            if(spart_trxn_req) begin
+	        ctrl_next_state = SPART_SDRAM;
+                spart_trxn_grant = 1'b1;
+                spart_trxn_busy  = 1'b1;
+	    
+            end else if (dmem_trxn_req) begin
+	        ctrl_next_state = DMEM_SDRAM;
+                dmem_trxn_grant = 1'b1;
+                dmem_trxn_busy  = 1'b1;
+	    
+	    end else if (vga_trxn_req) begin
+	        ctrl_next_state = SDRAM_VGA;
+                vga_trxn_grant = 1'b1;
+                vga_trxn_busy  = 1'b1;
+	    
+	    end else begin
+	        ctrl_next_state = IDLE_CTRL;
+	    end        
+        end
+        SPART_SDRAM: begin
+            spart_trxn_grant = 1'b0;
+            spart_trxn_busy  = 1'b1;
+	    if(mem_txn_done) begin	
+	        ctrl_next_state = IDLE_CTRL;
+	    end else begin
+	        ctrl_next_state = SPART_SDRAM;
+	    end
+        end
+	// shouldn't be able to get here, only happens when sdram is first
+	// written by spart, then read to init dmem
+        SDRAM_DMEM : begin
+            dmem_trxn_grant = 1'b0;
+            dmem_trxn_busy  = 1'b1;
+	    if(mem_txn_done) begin	
+	        ctrl_next_state = IDLE_CTRL;
+	    end else begin
+	        ctrl_next_state = SDRAM_DMEM;
+	    end
+        end
+        DMEM_SDRAM : begin
+            dmem_trxn_grant = 1'b0;
+            dmem_trxn_busy  = 1'b1;
+	    if(mem_txn_done) begin	
+	        ctrl_next_state = IDLE_CTRL;
+	    end else begin
+	        ctrl_next_state = DMEM_SDRAM;
+	    end
+        end
+        SDRAM_VGA  : begin
+            vga_trxn_grant = 1'b0;
+            vga_trxn_busy  = 1'b1;
+	    if(mem_txn_done) begin	
+	        ctrl_next_state = IDLE_CTRL;
+	    end else begin
+	        ctrl_next_state = SDRAM_VGA;
+	    end
+        end
+    endcase
+end
 
 // read write sdram dmem state machine
 parameter [2:0]
@@ -129,12 +213,13 @@ always@(posedge spart_ref_clk or negedge rst_n)
     else if (mem_txn_done) count_spart <= 0;
     else                   count_spart <= spart_wr_req ? count_spart + 1'b1 : count_spart;
 
+wire [`DMEM_A_LEN - 1:0] max_dmem_addr;
+assign max_dmem_addr = {`DMEM_A_LEN{1'b1}};
+
 wire [`DMEM_A_LEN-1:0] dmem_addr;
-//assign dmem_addr =  {{(10-length) {1'b0}},count};
 assign dmem_addr =  count[`DMEM_A_LEN-1:0];
 
 wire [15:0] wr_data;
-//assign wr_data = {{(16-length) {1'b0}},count};
 assign wr_data = count[15:0];
 
 wire dmem_to_sdram;
@@ -158,7 +243,31 @@ always@(*) begin
     mem_txn_done = 1'b1;
     case (state)
         IDLE: begin
-                next_state = dmem_to_sdram ? WRITE_DMEM : WRITE_SDRAM;
+	    case(ctrl_state)
+	        IDLE_CTRL: begin
+                    next_state = IDLE;
+                    //mem_txn_done = 1'b0;
+	        end	    
+	        SPART_SDRAM: begin //write sdram -> read sdram (and write dmem)
+                    next_state = WRITE_SDRAM;
+                    //mem_txn_done = 1'b0;
+	        end	    
+	        SDRAM_DMEM: begin // shouldn't go directly here 
+                    next_state = READ_SDRAM;
+                    //mem_txn_done = 1'b0;
+	        end	    
+	        DMEM_SDRAM: begin // read dmem (and write sdram) -> read sdram (and write dmem)
+                    next_state = READ_DMEM;
+                    //mem_txn_done = 1'b0;
+	        end	    
+	        SDRAM_VGA: begin //read row bursts to vga controller
+                    //mem_txn_done = 1'b0;
+	        end
+                default: begin		
+                    next_state = IDLE;
+                    mem_txn_done = 1'b1;
+	        end
+	    endcase
         end
 
         WRITE_DMEM: begin
@@ -243,11 +352,8 @@ always@(*) begin
                 count_rst  = 1'b1;
                 mem_txn_done = 1'b0;
         end
-        WRITE_SDRAM: begin
-            //if (~&count) begin
-            //if (~count_spart[length]) begin
+        WRITE_SDRAM: begin // during write back from dmem or mem init
 	    if (count_spart != (sdram_end_addr_reg - sdram_start_addr_reg + 2'h1)) begin
-            //if (count_spart != 25'd4098) begin
                 next_state = WRITE_SDRAM;
 
                 dmem_wren =  1'b0;
@@ -274,11 +380,8 @@ always@(*) begin
                 mem_txn_done = 1'b0;
             end
         end
-        READ_SDRAM: begin //also writes dmem
-            //if (~&count) begin
-            //if (count != 25'd20) begin
-            if (count != (sdram_end_addr_reg - sdram_start_addr_reg )) begin
-            //if (count != 25'd4097) begin
+        READ_SDRAM: begin // during init or after dmem write back
+            if (count != (sdram_end_addr_reg - sdram_start_addr_reg +2'h1)) begin
 		if(count > 2'h3) begin
 		    if ((count_del[15:0] - 2'h3)%9'h100 != sdram_rd_data_reg)
 	                next_state = FAIL;
@@ -303,20 +406,22 @@ always@(*) begin
                 mem_txn_done = 1'b0;
 
             end else begin
-                if (dmem_to_sdram)
-                    next_state = WAIT2;
-                else
-                    next_state = WAIT1;
+                //if (dmem_to_sdram)
+                //    next_state = WAIT2;
+                //else
+                //    next_state = WAIT1;
 
-                if (dmem_to_sdram)
-                    dmem_wren =  1'b0;
-                else
-                    dmem_wren =  1'b1;
+                //if (dmem_to_sdram)
+                //    dmem_wren =  1'b0;
+                //else
+                //    dmem_wren =  1'b1;
+                next_state = WAIT2;
 
+                dmem_wren =  1'b0;
                 dmem_rden =  1'b0;
 
                 sdram_wren = 1'b0;
-                sdram_rden = 1'b1;
+                sdram_rden = 1'b0;
 
                 count_en =   1'b1;
                 count_rst  = 1'b0;
@@ -400,12 +505,16 @@ always@(posedge spart_ref_clk or negedge rst_n)
 //assign smth = {sdram_rden,dmem_ref_clk,wr_data[3:0],sdram_rd_data[3:0]};
 /////////// START SDRAM START END ADDRESS AND LOAD ENABLE ////////////
 wire sdram_do_load_addr;
-assign sdram_do_load_addr = 1'b1;
+assign sdram_do_load_addr = spart_trxn_grant || dmem_trxn_grant || vga_trxn_grant;
 
 wire [24:0] sdram_start_addr_wire; //to controller
+wire [24:0] sdram_trxn_length_wire; //intermediary wire
 wire [24:0] sdram_end_addr_wire; //to controller  
-assign sdram_start_addr_wire = spart_start_addr;
-assign sdram_end_addr_wire = spart_end_addr;
+assign sdram_start_addr_wire = spart_trxn_grant ? spart_start_addr : dmem_trxn_grant ? 
+	dmem_start_addr : vga_trxn_grant ? vga_start_addr : 25'h0;
+assign sdram_trxn_length_wire = spart_trxn_grant ? spart_trxn_length : dmem_trxn_grant ? 
+	dmem_trxn_length : vga_trxn_grant ? vga_trxn_length : 25'h0;
+assign sdram_end_addr_wire = sdram_start_addr_wire + sdram_trxn_length_wire;
 
 reg [24:0] sdram_start_addr_reg; // for count reg
 reg [24:0] sdram_end_addr_reg; //for count reg
@@ -441,7 +550,7 @@ Sdram_Control sub_controller (
 	.WR_ADDR     (sdram_start_addr_wire), //(start_addr),
 	.WR_MAX_ADDR (25'h1ffffff), //(sdram_end_addr_wire+2'd2), //(start_addr + range),
 	.WR_LENGTH   (9'd02),
-	.WR_LOAD     (!rst_n), //(sdram_do_load_addr),
+	.WR_LOAD     (sdram_do_load_addr),
 	.WR_CLK      (spart_ref_clk), //(dmem_ref_clk),
         .WR_FULL     (write_full),
         .WR_USE      (wr_use),
@@ -451,7 +560,7 @@ Sdram_Control sub_controller (
 	.RD_ADDR     (sdram_start_addr_wire), //(start_addr),
 	.RD_MAX_ADDR (25'h1ffffff), //(sdram_end_addr_wire+2'd2), //(start_addr + range), // 33554431
 	.RD_LENGTH   (9'd02),
-	.RD_LOAD     (!rst_n), //(sdram_do_load_addr),
+	.RD_LOAD     (sdram_do_load_addr),
 	.RD_CLK      (dmem_ref_clk),
         .RD_EMPTY    (read_empty),
         .RD_USE      (rd_use),
