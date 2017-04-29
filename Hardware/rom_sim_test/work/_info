@@ -1,0 +1,584 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/16.1
+vALU
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 !s110 1492990004
+!i10b 1
+!s100 oS=1:>X>Y5lYP6054i7J?2
+I2j>4_i;1N_MaSEWLRaWkn1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s105 ALU_sv_unit
+S1
+Z3 dC:/Users/Brian/Documents/ece554/rom_sim_test
+w1492557350
+8C:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv
+L0 1
+Z4 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z5 !s108 1492990004.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv|
+!i113 1
+Z6 o-work work -sv
+Z7 tCvgOpt 0
+n@a@l@u
+valu_ops
+R0
+!s110 1493327801
+!i10b 1
+!s100 4DfPOb8LZbA@[J;l=S=JW3
+IMzJBDB1B00FBkES=bTo3^1
+R2
+!s105 alu_ops_sv_unit
+S1
+R3
+w1493327790
+8C:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv
+L0 1
+R4
+r1
+!s85 0
+31
+!s108 1493327801.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv|
+!i113 1
+R6
+R7
+vcontrol_block
+R0
+R1
+!i10b 1
+!s100 J4bzhbOl8dF@mLPC7cNfk2
+I[3zIch27MLmlcX2]j<V:b2
+R2
+!s105 control_block_sv_unit
+S1
+R3
+w1492721709
+8C:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv|
+!i113 1
+R6
+R7
+vCPU
+R0
+Z8 !s110 1492990003
+!i10b 1
+!s100 7L5n40oc_eJ7MMaR11S`G2
+IdEScX?Gn5^KSgBI;WM56>3
+R2
+!s105 CPU_sv_unit
+S1
+R3
+w1492974319
+8C:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv
+L0 1
+R4
+r1
+!s85 0
+31
+Z9 !s108 1492990003.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv|
+!i113 1
+R6
+R7
+n@c@p@u
+vCPU_tb
+R0
+!s110 1493330894
+!i10b 1
+!s100 3lZjOTbbBS7BWl7A>`@f71
+I]KGE;kzX8>B5889>A777E3
+R2
+!s105 CPU_tb_sv_unit
+S1
+R3
+w1493330866
+8C:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv
+L0 2
+R4
+r1
+!s85 0
+31
+!s108 1493330894.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv|
+!i113 1
+R6
+R7
+n@c@p@u_tb
+vEx_Mem_reg
+R0
+R8
+!i10b 1
+!s100 8B^NhYCT0YIeYoCEiZa^n2
+IDHfUKnT;d_nANUYV2ibQg2
+R2
+!s105 Ex_Mem_reg_sv_unit
+S1
+R3
+w1492973165
+8C:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv
+Z10 L0 12
+R4
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv|
+!i113 1
+R6
+R7
+n@ex_@mem_reg
+vExecute
+R0
+R8
+!i10b 1
+!s100 fLQ`=NQQf:]IDi;IYhCPc3
+I89[YDW@dC[63DQ:e11DSg2
+R2
+!s105 Execute_sv_unit
+S1
+R3
+w1492727264
+8C:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv|
+!i113 1
+R6
+R7
+n@execute
+vforwardUnit
+R0
+!s110 1493141185
+!i10b 1
+!s100 >HN<?`H=V0Q`eN@BbkoGT1
+If2@@k;@3BnH>S1mglYl^11
+R2
+!s105 forwardUnit_sv_unit
+S1
+R3
+w1493141178
+8C:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv
+Z11 L0 10
+R4
+r1
+!s85 0
+31
+!s108 1493141185.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv|
+!i113 1
+R6
+R7
+nforward@unit
+vID
+!s110 1493329446
+!i10b 1
+!s100 Qi`S7GO^G=2o6?glfd8IT0
+IIm^74_69GNmV[KC8F262P3
+R2
+R3
+w1493329442
+8C:/Users/Brian/Documents/ece554/CPU4_6/ID.v
+FC:/Users/Brian/Documents/ece554/CPU4_6/ID.v
+Z12 L0 11
+R4
+r1
+!s85 0
+31
+!s108 1493329446.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/ID.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/ID.v|
+!i113 1
+Z13 o-work work
+R7
+n@i@d
+vID_EX_reg
+R0
+!s110 1493332905
+!i10b 1
+!s100 ;Ya5Mz0Sm]@?c7dk88`ZT0
+IcKf]NbOiZj6QCJc_0BGQ_3
+R2
+!s105 ID_EX_reg_sv_unit
+S1
+R3
+w1493332901
+8C:/Users/Brian/Documents/ece554/CPU4_6/ID_EX_reg.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/ID_EX_reg.sv
+R10
+R4
+r1
+!s85 0
+31
+!s108 1493332905.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/ID_EX_reg.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/ID_EX_reg.sv|
+!i113 1
+R6
+R7
+n@i@d_@e@x_reg
+vID_tb
+R0
+R1
+!i10b 1
+!s100 ^^_i>8j[Kd[411U5k>m7S1
+IAIXjD0KzQG[FhEOV<SRgG3
+R2
+!s105 ID_tb_sv_unit
+S1
+R3
+w1491950542
+8C:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv
+R11
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv|
+!i113 1
+R6
+R7
+n@i@d_tb
+vIF_ID_reg
+R0
+R8
+!i10b 1
+!s100 F=WLdQUWno?QQ;CE<0Ib60
+I=jJPRV?EZc[17ZkgZKWDV1
+R2
+!s105 IF_ID_reg_sv_unit
+S1
+R3
+w1492728761
+8C:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv
+R10
+R4
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv|
+!i113 1
+R6
+R7
+n@i@f_@i@d_reg
+vIF_tb
+R0
+R1
+!i10b 1
+!s100 R;WnaemadJ:aJ`JfjegdC2
+IeazBk:O1^8DS>eDhcN8i13
+R2
+!s105 IF_tb_sv_unit
+S1
+R3
+w1491952208
+8C:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv|
+!i113 1
+R6
+R7
+n@i@f_tb
+vimage_rom
+Z14 !s110 1492990002
+!i10b 1
+!s100 dM>=;S9WULVFZS[ISSL3H3
+IO3mQYfMH>F5KaeOC89jV=0
+R2
+R3
+w1492988509
+8C:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v
+Z15 L0 40
+R4
+r1
+!s85 0
+31
+Z16 !s108 1492990002.000000
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v|
+!i113 1
+R13
+R7
+vInstructionFetch
+R0
+Z17 !s110 1493325326
+!i10b 1
+!s100 <Y[UjhMnI7N`FY2;Qk`mW3
+I[b8bk[=QX@Q>E7mHfRIWj2
+R2
+!s105 InstructionFetch_sv_unit
+S1
+R3
+w1493158804
+8C:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv
+R12
+R4
+r1
+!s85 0
+31
+Z18 !s108 1493325326.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv|
+!i113 1
+R6
+R7
+n@instruction@fetch
+vMem_WB_reg
+R0
+R8
+!i10b 1
+!s100 ?G>zG@N`Zjnk4?]LYQkkd3
+IMMhe9z8PelN9ZQc[MAV`R3
+R2
+!s105 Mem_WB_reg_sv_unit
+S1
+R3
+w1492973904
+8C:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv
+R12
+R4
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv|
+!i113 1
+R6
+R7
+n@mem_@w@b_reg
+vMemory
+R0
+R8
+!i10b 1
+!s100 z[KF>eie4zZ@=3bndz<780
+I=_M5b1G12fmboo0Y87CXe3
+R2
+!s105 Memory_sv_unit
+S1
+R3
+w1492973007
+8C:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv
+L0 5
+R4
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv|
+!i113 1
+R6
+R7
+n@memory
+vMUL
+R0
+R1
+!i10b 1
+!s100 3Q0ZMen4[XKZO_MmNG]UM3
+If_7CDkHMNo2M1M;K89:H41
+R2
+!s105 MUL_sv_unit
+S1
+R3
+w1492557367
+8C:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv|
+!i113 1
+R6
+R7
+n@m@u@l
+vregfile
+R0
+!s110 1493140659
+!i10b 1
+!s100 3j2a36FBR=XkQzP5255Q^2
+IRZ1]hY6NM9WIh01;V;Db70
+R2
+!s105 regfile_sv_unit
+S1
+R3
+w1493139685
+8C:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv
+FC:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv
+R11
+R4
+r1
+!s85 0
+31
+!s108 1493140659.000000
+!s107 C:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv|
+!i113 1
+R6
+R7
+vromA0
+R17
+!i10b 1
+!s100 4T1mjNS3`6ifJVhATzn_70
+I7TV49nE3Y82G2Nb?gjC2a2
+R2
+R3
+w1493159588
+8C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v
+R15
+R4
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v|
+!i113 1
+R13
+R7
+nrom@a0
+vromA1
+R17
+!i10b 1
+!s100 lHzB]zRD`B]C2eG6j0:ih1
+Ia996oK3[^i1BU^JJO^AS>0
+R2
+R3
+w1493159676
+8C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v
+R15
+R4
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v|
+!i113 1
+R13
+R7
+nrom@a1
+vromLS
+R17
+!i10b 1
+!s100 AeVN1]00<HNRi@O4QZPkI1
+IY1a41m]EVQJn@LZJZFk_=2
+R2
+R3
+w1493159677
+8C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v
+R15
+R4
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v|
+!i113 1
+R13
+R7
+nrom@l@s
+vromM
+R17
+!i10b 1
+!s100 m2Ym<No_QZ1[866?UhKbE0
+IUL:TfFGdmgPhCRGA1oHjb3
+R2
+R3
+w1493159672
+8C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v
+R15
+R4
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v|
+!i113 1
+R13
+R7
+nrom@m
+vtb
+R14
+!i10b 1
+!s100 h]Of?^J:Z]:Z>Ik`@LW=U0
+IJUD0kF=@K98K?IS@Cdo9M0
+R2
+R3
+w1492988249
+8C:/Users/Brian/Documents/ece554/rom_sim_test/tb.v
+FC:/Users/Brian/Documents/ece554/rom_sim_test/tb.v
+L0 3
+R4
+r1
+!s85 0
+31
+R16
+!s107 C:/Users/Brian/Documents/ece554/rom_sim_test/tb.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Brian/Documents/ece554/rom_sim_test/tb.v|
+!i113 1
+R13
+R7

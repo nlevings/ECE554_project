@@ -1,0 +1,162 @@
+C:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/regfile.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module regfile
+
+Top level modules:
+	regfile
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/MUL.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module MUL
+
+Top level modules:
+	MUL
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/tb.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module tb
+
+Top level modules:
+	tb
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA0.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module romA0
+
+Top level modules:
+	romA0
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/CPU.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module CPU
+
+Top level modules:
+	CPU
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/Ex_Mem_reg.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module Ex_Mem_reg
+
+Top level modules:
+	Ex_Mem_reg
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romA1.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module romA1
+
+Top level modules:
+	romA1
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/ip/image_rom.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module image_rom
+
+Top level modules:
+	image_rom
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/Memory.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module Memory
+
+Top level modules:
+	Memory
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/ID.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/ID.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module ID
+
+Top level modules:
+	ID
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/CPU_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module CPU_tb
+
+Top level modules:
+	CPU_tb
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/forwardUnit.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module forwardUnit
+
+Top level modules:
+	forwardUnit
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romLS.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module romLS
+
+Top level modules:
+	romLS
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/IF_ID_reg.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module IF_ID_reg
+
+Top level modules:
+	IF_ID_reg
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/ALU.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/ID_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module ID_tb
+
+Top level modules:
+	ID_tb
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/alu_ops.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module alu_ops
+
+Top level modules:
+	alu_ops
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/Execute.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module Execute
+
+Top level modules:
+	Execute
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/control_block.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module control_block
+
+Top level modules:
+	control_block
+
+} {} {}} C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v {1 {vlog -work work -stats=none C:/Users/Brian/Documents/ece554/rom_sim_test/ip/romM.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module romM
+
+Top level modules:
+	romM
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/InstructionFetch.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module InstructionFetch
+
+Top level modules:
+	InstructionFetch
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/Mem_WB_reg.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module Mem_WB_reg
+
+Top level modules:
+	Mem_WB_reg
+
+} {} {}} C:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/Brian/Documents/ece554/CPU4_6/IF_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module IF_tb
+
+Top level modules:
+	IF_tb
+
+} {} {}}
